@@ -2,27 +2,25 @@
 import React, { useState, useEffect } from "react";
 
 export default function SearchResults() {
-  const [data, setData] = useState({ x: "" });
+  const [todo, setTodo] = useState({ title: "" });
   const [id, setId] = useState(1);
 
-   useEffect(() => {
-    function fetchSwapi() {
-      fetch('https://jsonplaceholder.typicode.com/users?id='+id)
+  useEffect(() => {
+    function fetchTodo() {
+      console.log("Fetching")
+      fetch('https://jsonplaceholder.typicode.com/todos/'+id)
       .then(res=>res.json())
-      .then(data =>  {
-          if(data.length > 0){
-              setData(data[0]);
-          }})
+      .then(data =>  setTodo(data))  
       .catch(err => console.log("Ups"+err))
     }
-    fetchSwapi();
-  },[id]);
+    fetchTodo();
+  });
 
   return (
     <>
       <input value={id} onChange={e => setId(e.target.value)} />
      
-      <p> Name: {data.name} /</p>
+      <p> Name: {todo.title} /</p>
      
     </>
   );
